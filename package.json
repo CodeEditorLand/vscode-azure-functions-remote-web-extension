@@ -1,45 +1,58 @@
 {
   "name": "vscode-azure-functions-remote-web",
   "displayName": "vscode-azure-functions-remote-web",
-  "publisher": "ms-toolsai",
-  "description": "",
   "version": "0.0.1",
-  "main": "webOpener.ts",
-  "engines": {
-    "vscode": "1.67.0"
-  },
+  "private": "false",
+  "description": "",
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:mypanel.start"
-  ],
+  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+  "bugs": {
+    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nikola Hristov",
+    "email": "nikola@nikolahristov.tech",
+    "url": "https://nikolahristov.tech"
+  },
+  "publisher": "ms-toolsai",
+  "type": "module",
+  "main": "webOpener.ts",
   "browser": "./dist/web/extension.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "compile-web": "webpack",
+    "host": "npx serve --cors -l 5000",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package",
+    "package-web": "webpack --mode production --devtool hidden-source-map",
+    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts",
+    "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
+    "pretest": "npm run compile-web",
+    "vscode:prepublish": "npm install && npm run clean && npm run package-web",
+    "watch-web": "webpack --watch"
+  },
   "contributes": {
-    "webOpener": {
-      "scheme": "vscode-remote",
-      "import": "dist/webOpener.js"
-    },
     "commands": [
       {
         "command": "mypanel.start",
         "title": "start panel"
       }
-    ]
+    ],
+    "webOpener": {
+      "scheme": "vscode-remote",
+      "import": "dist/webOpener.js"
+    }
   },
-  "scripts": {
-    "clean": "rimraf ./dist",
-    "pretest": "npm run compile-web",
-    "vscode:prepublish": "npm install && npm run clean && npm run package-web",
-    "compile-web": "webpack",
-    "watch-web": "webpack --watch",
-    "package": "vsce package",
-    "package-web": "webpack --mode production --devtool hidden-source-map",
-    "lint": "eslint src --ext ts",
-    "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-    "host": "npx serve --cors -l 5000",
-    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
-  },
+  "activationEvents": [
+    "onCommand:mypanel.start"
+  ],
   "dependencies": {
     "@azure/arm-app": "1.0.0-alpha.20220330.1",
     "@azure/identity": "3.3.2",
@@ -88,27 +101,14 @@
     "process": "0.11.10",
     "ts-loader": "9.5.0",
     "typescript": "5.2.2",
+    "typescript-esbuild": "0.3.1",
     "webpack": "5.89.0",
-    "webpack-cli": "5.1.4",
-    "typescript-esbuild": "0.3.1"
+    "webpack-cli": "5.1.4"
   },
-  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-  "bugs": {
-    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  "engines": {
+    "vscode": "1.67.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-  },
-  "license": "MIT",
-  "type": "module",
-  "private": "false",
   "publishConfig": {
     "access": "public"
-  },
-  "author": {
-    "name": "Nikola Hristov",
-    "email": "nikola@nikolahristov.tech",
-    "url": "https://nikolahristov.tech"
   }
 }
