@@ -21,7 +21,7 @@
     "email": "nikola@nikolahristov.tech",
     "url": "https://nikolahristov.tech"
   },
-  "publisher": "ms-toolsai",
+  "publisher": "playform",
   "type": "module",
   "main": "webOpener.ts",
   "browser": "./dist/web/extension.js",
