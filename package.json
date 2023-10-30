@@ -1,114 +1,114 @@
 {
-  "name": "vscode-azure-functions-remote-web",
-  "displayName": "vscode-azure-functions-remote-web",
-  "version": "0.0.1",
-  "private": "false",
-  "description": "",
-  "categories": [
-    "Other"
-  ],
-  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-  "bugs": {
-    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Nikola Hristov",
-    "email": "nikola@nikolahristov.tech",
-    "url": "https://nikolahristov.tech"
-  },
-  "publisher": "playform",
-  "type": "module",
-  "main": "webOpener.ts",
-  "browser": "./dist/web/extension.js",
-  "scripts": {
-    "clean": "rimraf ./dist",
-    "compile-web": "webpack",
-    "host": "npx serve --cors -l 5000",
-    "lint": "eslint src --ext ts",
-    "package": "vsce package",
-    "package-web": "webpack --mode production --devtool hidden-source-map",
-    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts",
-    "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-    "pretest": "npm run compile-web",
-    "vscode:prepublish": "npm install && npm run clean && npm run package-web",
-    "watch-web": "webpack --watch"
-  },
-  "contributes": {
-    "commands": [
-      {
-        "command": "mypanel.start",
-        "title": "start panel"
-      }
-    ],
-    "webOpener": {
-      "scheme": "vscode-remote",
-      "import": "dist/webOpener.js"
-    }
-  },
-  "activationEvents": [
-    "onCommand:mypanel.start"
-  ],
-  "dependencies": {
-    "@azure/arm-app": "1.0.0-alpha.20220330.1",
-    "@azure/identity": "3.3.2",
-    "@azure/identity-vscode": "1.0.0",
-    "@azure/keyvault-keys": "4.7.2",
-    "@msgpack/msgpack": "2.8.0",
-    "@vs/tunnels-connections": "1.0.7280",
-    "@vs/tunnels-contracts": "1.0.7280",
-    "@vs/tunnels-management": "1.0.7280",
-    "@vscode/test-electron": "2.3.6",
-    "adm-zip": "0.5.10",
-    "axios": "1.6.0",
-    "buffer": "6.0.3",
-    "constants-browserify": "1.0.0",
-    "exponential-backoff": "3.1.1",
-    "graceful-fs": "4.2.11",
-    "js-md5": "0.8.3",
-    "lodash": "4.17.21",
-    "net": "1.0.2",
-    "node-rsa": "1.1.1",
-    "p-retry": "6.1.0",
-    "process": "0.11.10",
-    "retry": "0.13.1",
-    "safe-buffer": "5.2.1",
-    "stream-browserify": "3.0.0",
-    "tsc": "2.0.4",
-    "url": "0.11.3",
-    "uuid": "9.0.1",
-    "vscode-uri": "3.0.8"
-  },
-  "devDependencies": {
-    "@types/async-retry": "1.4.7",
-    "@types/js-md5": "0.7.1",
-    "@types/mocha": "10.0.3",
-    "@types/node": "20.8.9",
-    "@types/uuid": "9.0.6",
-    "@types/vscode": "1.83.1",
-    "@types/webpack-env": "1.18.3",
-    "@typescript-eslint/eslint-plugin": "6.9.0",
-    "@typescript-eslint/parser": "6.9.0",
-    "@vscode-internal/remote-web-tunnels": "1.4.0",
-    "@vscode/test-web": "0.0.48",
-    "assert": "2.1.0",
-    "eslint": "8.52.0",
-    "mocha": "10.2.0",
-    "process": "0.11.10",
-    "ts-loader": "9.5.0",
-    "typescript": "5.2.2",
-    "typescript-esbuild": "0.3.1",
-    "webpack": "5.89.0",
-    "webpack-cli": "5.1.4"
-  },
-  "engines": {
-    "vscode": "1.67.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "vscode-azure-functions-remote-web",
+	"displayName": "vscode-azure-functions-remote-web",
+	"version": "0.0.1",
+	"private": "false",
+	"description": "",
+	"categories": [
+		"Other"
+	],
+	"homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Nikola Hristov",
+		"email": "nikola@nikolahristov.tech",
+		"url": "https://nikolahristov.tech"
+	},
+	"publisher": "playform",
+	"type": "module",
+	"main": "webOpener.ts",
+	"browser": "./dist/web/extension.js",
+	"scripts": {
+		"clean": "rimraf ./dist",
+		"compile-web": "webpack",
+		"host": "npx serve --cors -l 5000",
+		"lint": "eslint src --ext ts",
+		"package": "vsce package",
+		"package-web": "webpack --mode production --devtool hidden-source-map",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
+		"pretest": "npm run compile-web",
+		"vscode:prepublish": "npm install && npm run clean && npm run package-web",
+		"watch-web": "webpack --watch"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "mypanel.start",
+				"title": "start panel"
+			}
+		],
+		"webOpener": {
+			"scheme": "vscode-remote",
+			"import": "dist/webOpener.js"
+		}
+	},
+	"activationEvents": [
+		"onCommand:mypanel.start"
+	],
+	"dependencies": {
+		"@azure/arm-app": "1.0.0-alpha.20220330.1",
+		"@azure/identity": "3.3.2",
+		"@azure/identity-vscode": "1.0.0",
+		"@azure/keyvault-keys": "4.7.2",
+		"@msgpack/msgpack": "2.8.0",
+		"@vs/tunnels-connections": "1.0.7280",
+		"@vs/tunnels-contracts": "1.0.7280",
+		"@vs/tunnels-management": "1.0.7280",
+		"@vscode/test-electron": "2.3.6",
+		"adm-zip": "0.5.10",
+		"axios": "1.6.0",
+		"buffer": "6.0.3",
+		"constants-browserify": "1.0.0",
+		"exponential-backoff": "3.1.1",
+		"graceful-fs": "4.2.11",
+		"js-md5": "0.8.3",
+		"lodash": "4.17.21",
+		"net": "1.0.2",
+		"node-rsa": "1.1.1",
+		"p-retry": "6.1.0",
+		"process": "0.11.10",
+		"retry": "0.13.1",
+		"safe-buffer": "5.2.1",
+		"stream-browserify": "3.0.0",
+		"tsc": "2.0.4",
+		"url": "0.11.3",
+		"uuid": "9.0.1",
+		"vscode-uri": "3.0.8"
+	},
+	"devDependencies": {
+		"@types/async-retry": "1.4.7",
+		"@types/js-md5": "0.7.1",
+		"@types/mocha": "10.0.3",
+		"@types/node": "20.8.9",
+		"@types/uuid": "9.0.6",
+		"@types/vscode": "1.83.1",
+		"@types/webpack-env": "1.18.3",
+		"@typescript-eslint/eslint-plugin": "6.9.0",
+		"@typescript-eslint/parser": "6.9.0",
+		"@vscode-internal/remote-web-tunnels": "1.4.0",
+		"@vscode/test-web": "0.0.48",
+		"assert": "2.1.0",
+		"eslint": "8.52.0",
+		"mocha": "10.2.0",
+		"process": "0.11.10",
+		"ts-loader": "9.5.0",
+		"typescript": "5.2.2",
+		"typescript-esbuild": "0.3.1",
+		"webpack": "5.89.0",
+		"webpack-cli": "5.1.4"
+	},
+	"engines": {
+		"vscode": "1.67.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
