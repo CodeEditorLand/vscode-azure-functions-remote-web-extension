@@ -6,7 +6,7 @@ import * as vscode from "vscode";
 export async function activate(context: vscode.ExtensionContext) {
 	function getMyWebviewContent(
 		webview: vscode.Webview,
-		context: any,
+		context: any
 	): string {
 		let html = "";
 
@@ -39,12 +39,12 @@ export async function activate(context: vscode.ExtensionContext) {
 				"mypanel", // <--- identifier
 				"Limelight Welcome", // <--- title
 				vscode.ViewColumn.One,
-				{},
+				{}
 			);
 
 			// And set its HTML content
 			panel.webview.html = getMyWebviewContent(panel.webview, context); // <--- HTML
-		}),
+		})
 	);
 }
 

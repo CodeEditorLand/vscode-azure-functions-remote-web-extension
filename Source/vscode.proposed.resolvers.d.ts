@@ -117,10 +117,10 @@ declare module "vscode" {
 	export class RemoteAuthorityResolverError extends Error {
 		static NotAvailable(
 			message?: string,
-			handled?: boolean,
+			handled?: boolean
 		): RemoteAuthorityResolverError;
 		static TemporarilyNotAvailable(
-			message?: string,
+			message?: string
 		): RemoteAuthorityResolverError;
 
 		constructor(message?: string);
@@ -138,7 +138,7 @@ declare module "vscode" {
 		 */
 		resolve(
 			authority: string,
-			context: RemoteAuthorityResolverContext,
+			context: RemoteAuthorityResolverContext
 		): ResolverResult | Thenable<ResolverResult>;
 
 		/**
@@ -158,7 +158,7 @@ declare module "vscode" {
 		 */
 		tunnelFactory?: (
 			tunnelOptions: TunnelOptions,
-			tunnelCreationOptions: TunnelCreationOptions,
+			tunnelCreationOptions: TunnelCreationOptions
 		) => Thenable<Tunnel> | undefined;
 
 		/**p
@@ -167,7 +167,7 @@ declare module "vscode" {
 		showCandidatePort?: (
 			host: string,
 			port: number,
-			detail: string,
+			detail: string
 		) => Thenable<boolean>;
 
 		/**
@@ -192,7 +192,7 @@ declare module "vscode" {
 		 * @param tunnelOptions The `localPort` is a suggestion only. If that port is not available another will be chosen.
 		 */
 		export function openTunnel(
-			tunnelOptions: TunnelOptions,
+			tunnelOptions: TunnelOptions
 		): Thenable<Tunnel>;
 
 		/**
@@ -229,10 +229,10 @@ declare module "vscode" {
 	export namespace workspace {
 		export function registerRemoteAuthorityResolver(
 			authorityPrefix: string,
-			resolver: RemoteAuthorityResolver,
+			resolver: RemoteAuthorityResolver
 		): Disposable;
 		export function registerResourceLabelFormatter(
-			formatter: ResourceLabelFormatter,
+			formatter: ResourceLabelFormatter
 		): Disposable;
 	}
 
