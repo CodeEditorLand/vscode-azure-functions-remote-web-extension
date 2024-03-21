@@ -1,36 +1,15 @@
 {
-	"name": "vscode-azure-functions-remote-web",
-	"displayName": "vscode-azure-functions-remote-web",
-	"version": "0.0.1",
-	"private": false,
-	"description": "",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
+	"activationEvents": [
+		"onCommand:mypanel.start"
+	],
 	"author": {
-		"name": "Playform",
 		"email": "Hello@Playform.Cloud",
+		"name": "Playform",
 		"url": "https://playform.cloud"
 	},
-	"type": "module",
-	"main": "webOpener.ts",
 	"browser": "./dist/web/extension.js",
-	"scripts": {
-		"clean": "rimraf ./dist",
-		"compile-web": "webpack",
-		"host": "npx serve --cors -l 5000",
-		"package": "vsce package",
-		"package-web": "webpack --mode production --devtool hidden-source-map",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-		"vscode:prepublish": "npm install && npm run clean && npm run package-web",
-		"watch-web": "webpack --watch"
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
 	},
 	"contributes": {
 		"commands": [
@@ -44,9 +23,6 @@
 			"scheme": "vscode-remote"
 		}
 	},
-	"activationEvents": [
-		"onCommand:mypanel.start"
-	],
 	"dependencies": {
 		"@azure/arm-app": "1.0.0-alpha.20220330.1",
 		"@azure/identity": "2.1.0",
@@ -77,6 +53,7 @@
 		"uuid": "8.3.2",
 		"vscode-uri": "3.0.3"
 	},
+	"description": "",
 	"devDependencies": {
 		"@types/async-retry": "1.4.5",
 		"@types/js-md5": "0.7.0",
@@ -92,11 +69,34 @@
 		"process": "0.11.10",
 		"ts-loader": "9.3.1",
 		"typescript": "4.7.4",
-		"typescript-esbuild": "0.4.5",
+		"typescript-esbuild": "",
 		"webpack": "5.74.0",
 		"webpack-cli": "4.10.0"
 	},
+	"displayName": "vscode-azure-functions-remote-web",
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"license": "SEE LICENSE IN LICENSE",
+	"main": "webOpener.ts",
+	"name": "vscode-azure-functions-remote-web",
+	"private": false,
 	"publishConfig": {
 		"access": "public"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+	},
+	"scripts": {
+		"clean": "rimraf ./dist",
+		"compile-web": "webpack",
+		"host": "npx serve --cors -l 5000",
+		"package": "vsce package",
+		"package-web": "webpack --mode production --devtool hidden-source-map",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
+		"vscode:prepublish": "npm install && npm run clean && npm run package-web",
+		"watch-web": "webpack --watch"
+	},
+	"type": "module",
+	"version": "0.0.1"
 }
