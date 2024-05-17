@@ -1,27 +1,7 @@
 {
 	"name": "vscode-azure-functions-remote-web",
 	"displayName": "vscode-azure-functions-remote-web",
-	"version": "0.0.1",
-	"private": false,
 	"description": "",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandAzureFunctionsRemoteWebExtension#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandAzureFunctionsRemoteWebExtension/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandAzureFunctionsRemoteWebExtension.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
 	"main": "webOpener.ts",
 	"browser": "./dist/web/extension.js",
 	"scripts": {
@@ -75,7 +55,6 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/async-retry": "1.4.5",
 		"@types/js-md5": "0.7.0",
 		"@types/node": "18.7.7",
@@ -83,8 +62,5 @@
 		"assert": "2.0.0",
 		"process": "0.11.10",
 		"ts-loader": "9.3.1"
-	},
-	"publishConfig": {
-		"access": "public"
 	}
 }
