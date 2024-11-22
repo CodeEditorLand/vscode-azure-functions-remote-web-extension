@@ -35,7 +35,9 @@ export namespace Basis {
 			typeof tunnel === "string"
 				? getTunnelDefByName(tunnel)
 				: getTunnelDefById(tunnel.id, tunnel.cluster);
+
 		let tunnelInstance = await getTunnel(tunnelDef, tunnelManagementClient);
+
 		let tunnelRelayTunnelClient = new TunnelRelayTunnelClient();
 
 		tunnelRelayTunnelClient.trace = (
@@ -54,6 +56,7 @@ export namespace Basis {
 
 		// Get stream to talk to remote
 		await tunnelRelayTunnelClient.waitForForwardedPort(port);
+
 		return await tunnelRelayTunnelClient.connectToForwardedPort(port);
 	}
 
@@ -84,6 +87,7 @@ export namespace Basis {
 			tunnel,
 			tunnelRequestOptions,
 		);
+
 		if (!foundTunnel) {
 			throw new Error("Unable to find tunnel");
 		}
@@ -106,6 +110,7 @@ export namespace Basis {
 
 		for (const tunnel of allTunnels) {
 			console.log(`AzureMLRemote: Found tunnel ${tunnel.name}`);
+
 			if (tunnel.name === tunnelName) {
 				return true;
 			}
@@ -133,6 +138,7 @@ export namespace Basis {
 
 	function makeString(): string {
 		let outString: string = "";
+
 		let inOptions: string = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 		for (let i = 0; i < 32; i++) {
@@ -157,6 +163,7 @@ export namespace Basis {
 							"vscode.dev.azurefunctions-remote-web",
 							() => Promise.resolve(`Bearer ${accessToken}`),
 						);
+
 				let tunnelAccessControlEntry: TunnelAccessControlEntry = {
 					type: TunnelAccessControlEntryType.Anonymous,
 					subjects: [],
@@ -170,6 +177,7 @@ export namespace Basis {
 						entries: [tunnelAccessControlEntry],
 					},
 				};
+
 				let tunnelRequestOptions: TunnelRequestOptions = {
 					tokenScopes: ["host"],
 					includePorts: true,
@@ -198,6 +206,7 @@ export namespace Basis {
 						console.log(
 							`Deleting inactive tunnels as max tunnel count limit for user reached`,
 						);
+
 						return await Basis.deleteInactiveTunnels(accessToken);
 					}
 				},
@@ -216,10 +225,12 @@ export namespace Basis {
 					"vscode.dev.azurefunctions-remote-web",
 					() => Promise.resolve(`Bearer ${accessToken}`),
 				);
+
 		let tunnelInstance = await getTunnel(
 			tunnel,
 			tunnelManagementClientImpl,
 		);
+
 		return (
 			tunnelInstance!.status?.hostConnectionCount !== undefined &&
 			tunnelInstance!.status?.hostConnectionCount !== 0
@@ -231,6 +242,7 @@ export namespace Basis {
 			tunnel!.status?.hostConnectionCount !== undefined &&
 				tunnel!.status?.hostConnectionCount !== 0,
 		);
+
 		return (
 			tunnel!.status?.hostConnectionCount !== undefined &&
 			tunnel!.status?.hostConnectionCount !== 0
@@ -247,6 +259,7 @@ export namespace Basis {
 					"vscode.dev.azurefunctions-remote-web",
 					() => Promise.resolve(`Bearer ${accessToken}`),
 				);
+
 		let tunnelInstance = await getTunnel(
 			tunnel,
 			tunnelManagementClientImpl,
@@ -286,7 +299,9 @@ export namespace Basis {
 				);
 
 		const tunnels = await tunnelManagementClientImpl.listTunnels();
+
 		let inactiveTunnels: Tunnel[] = [];
+
 		if (tunnels && tunnels.length > 0) {
 			inactiveTunnels = tunnels.filter((tl) => !Basis.isTunnelActive(tl));
 		}

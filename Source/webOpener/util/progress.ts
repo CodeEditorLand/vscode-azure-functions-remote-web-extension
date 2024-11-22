@@ -34,7 +34,9 @@ async function handleLogsToShowProgress(
 	manager: ConnectionManager,
 ): Promise<void> {
 	let dispose: Disposable[] = [];
+
 	let lastDownloadPercent = 0;
+
 	return new Promise<void>((resolve, reject) => {
 		dispose.push(
 			manager.onLog((log) => {

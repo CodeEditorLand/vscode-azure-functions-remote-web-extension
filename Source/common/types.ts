@@ -47,6 +47,7 @@ export interface MicrosoftAuthenticationSession {
 		id: string;
 	};
 	readonly scopes: readonly string[];
+
 	getAccessToken(): Promise<string>;
 }
 

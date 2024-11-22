@@ -95,6 +95,7 @@ declare module "vs/workbench/workbench.web.main" {
 			good.scheme === 'file';
 			good.path === '/coding/c#/project1';
 			good.fragment === '';
+
 			const bad = URI.parse('file://' + '/coding/c#/project1');
 			bad.scheme === 'file';
 			bad.path === '/coding/c'; // path is now broken
@@ -161,6 +162,7 @@ declare module "vs/workbench/workbench.web.main" {
 	interface IConfigurationProperty {
 		description: string;
 		type: string | string[];
+
 		default?: any;
 	}
 
@@ -226,6 +228,7 @@ declare module "vs/workbench/workbench.web.main" {
 	interface IColor {
 		id: string;
 		description: string;
+
 		defaults: { light: string; dark: string; highContrast: string };
 	}
 
@@ -254,6 +257,7 @@ declare module "vs/workbench/workbench.web.main" {
 		readonly id: string;
 		label: string;
 		tooltip: string;
+
 		class: string | undefined;
 		enabled: boolean;
 		checked?: boolean;
@@ -353,6 +357,7 @@ declare module "vs/workbench/workbench.web.main" {
 
 	abstract class Disposable implements IDisposable {
 		static readonly None: IDisposable;
+
 		constructor();
 		dispose(): void;
 	}
@@ -672,7 +677,9 @@ declare module "vs/workbench/workbench.web.main" {
 		function isCancellationToken(
 			thing: unknown,
 		): thing is CancellationToken;
+
 		const None: CancellationToken;
+
 		const Cancelled: CancellationToken;
 	}
 
@@ -753,6 +760,7 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface ICredentialsProvider {
 		getPassword(service: string, account: string): Promise<string | null>;
+
 		setPassword(
 			service: string,
 			account: string,
@@ -826,6 +834,7 @@ declare module "vs/workbench/workbench.web.main" {
 			{
 				name: string;
 				remotes?: string[];
+
 				important?: boolean;
 				isExtensionPack?: boolean;
 			}
@@ -835,6 +844,7 @@ declare module "vs/workbench/workbench.web.main" {
 	interface IExeBasedExtensionTip {
 		friendlyName: string;
 		windowsPath?: string;
+
 		important?: boolean;
 		recommendations: Record<
 			string,
@@ -1965,7 +1975,9 @@ declare module "vs/workbench/workbench.web.main" {
 		>;
 
 		function getUriScheme(): Promise<string>;
+
 		function openUri(target: URI): Promise<boolean>;
+
 		const telemetryLevel: Promise<IObservableValue<TelemetryLevel>>;
 	}
 

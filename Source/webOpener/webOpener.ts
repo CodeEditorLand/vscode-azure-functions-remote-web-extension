@@ -57,6 +57,7 @@ export const BASIS_SCOPES = [
 export const MANAGEMENT_SCOPES = [`https://management.azure.com/.default`];
 
 const tunnelPort = 31545;
+
 const urlParamMap = new Map<string, number>([
 	["subscription", 0],
 	["resourceGroup", 1],
@@ -65,12 +66,15 @@ const urlParamMap = new Map<string, number>([
 ]);
 
 const cachedWorkerHostname = "workerHostname";
+
 const cachedTunnelDefinition = "tunnel-def";
 
 const containerServiceHostname =
 	"https://limelight-api-server.salmonfield-d8375633.centralus.azurecontainerapps.io:443";
 // "https://limelight-container-service.mangostone-a0af9f1f.centralus.azurecontainerapps.io:443";
+
 const USER_AGENT = "vscode.dev.azure-functions-remote-web";
+
 const AzureAuthManager = require("./azureAuthUtility.js");
 
 export interface IRouterWorkbench {
@@ -113,9 +117,11 @@ export default async function doRoute(
 			: route.workspace!.workspaceUri;
 
 	console.log("uri: " + workspaceOrFolderUri);
+
 	const version = parseVersion(workspaceOrFolderUri.query);
 
 	console.log(`Getting authority name ${workspaceOrFolderUri.authority}`);
+
 	const loadUri = workspaceOrFolderUri.with({
 		// scheme: 'http',
 		authority: `appazurefunctions+${workspaceOrFolderUri.authority}`,
@@ -129,8 +135,10 @@ export default async function doRoute(
 	const azureAuthManager = new AzureAuthManager(
 		extra.microsoftAuthentication,
 	);
+
 	const managementAccessToken =
 		await azureAuthManager.getAccessToken(MANAGEMENT_SCOPES);
+
 	const basisAccessToken =
 		await azureAuthManager.getAccessToken(BASIS_SCOPES);
 
@@ -152,10 +160,13 @@ export default async function doRoute(
 	// };
 
 	const controllerRoleBaseUrl = "http://localhost/";
+
 	const controllerRoleEndpoint = "post/test";
+
 	const controllerRoleBody = {
 		"info": "myInfo",
 	};
+
 	const controllerRolePort = 3000;
 
 	const controllerRoleUrl = createUrl(
@@ -163,6 +174,7 @@ export default async function doRoute(
 		controllerRoleEndpoint,
 		controllerRolePort,
 	);
+
 	let tunnelID = await postRequest(controllerRoleUrl, controllerRoleBody);
 
 	// Call Limelight Agent API
@@ -173,10 +185,13 @@ export default async function doRoute(
 	// };
 
 	const agentBaseUrl = "http://localhost/";
+
 	const agentEndpoint = "post/test";
+
 	const agentBody = {
 		"tunnelId": "abc123",
 	};
+
 	const agentPort = 3000;
 
 	const agentUrl = createUrl(agentBaseUrl, agentEndpoint, agentPort);
@@ -194,6 +209,7 @@ export default async function doRoute(
 		storageAccountName,
 		storageAccountKey,
 		srcURL;
+
 	if (!isNewApp) {
 		console.log(`Function app ${functionAppName} is an existing app`);
 		storageAccountConnectionString =
@@ -215,9 +231,11 @@ export default async function doRoute(
 	}
 
 	let tunnel;
+
 	const rawTunnelDef = localStorage.getItem(cachedTunnelDefinition);
 
 	const cachedTunnelDef = rawTunnelDef ? JSON.parse(rawTunnelDef) : undefined;
+
 	if (cachedTunnelDef) {
 		try {
 			tunnel = await Basis.findTunnel(basisAccessToken, cachedTunnelDef);
@@ -248,6 +266,7 @@ export default async function doRoute(
 					console.log(
 						`Deleting inactive tunnels as max tunnel count limit for user reached`,
 					);
+
 					return await Basis.deleteInactiveTunnels(basisAccessToken);
 				},
 				retries: 3,
@@ -258,13 +277,18 @@ export default async function doRoute(
 	// Call container api hosted at the container app ip
 	console.log("Tunnel is found..");
 	console.log(tunnel);
+
 	const tunnelActive = await Basis.isActive(basisAccessToken, tunnel);
+
 	if (!tunnelActive) {
 		// If not, call api server to create and return a new container app
 		localStorage.removeItem(cachedWorkerHostname);
+
 		let workerHostname: string | undefined = undefined;
+
 		try {
 			console.log("Starting limelight session..");
+
 			const containerInfo = await axios.post(
 				`${containerServiceHostname}/limelight/session/start`,
 				// "http://localhost:443/limelight/session/start",
@@ -279,6 +303,7 @@ export default async function doRoute(
 			console.log("Limelight session is created..");
 			console.log(containerInfo);
 			workerHostname = containerInfo.data.data.configuration.ingress.fqdn;
+
 			if (workerHostname) {
 				localStorage.setItem(cachedWorkerHostname, workerHostname);
 			} else {
@@ -304,11 +329,13 @@ export default async function doRoute(
 		} catch (error) {
 			console.log("Failed to create limelight session..");
 			console.log(error);
+
 			throw new Error("Failed to create limelight session..");
 		}
 
 		try {
 			console.log(`Starting code server at ${workerHostname}..`);
+
 			const { data } = await axios.post(
 				`https://${workerHostname}:443/limelight-worker/code-server/start`,
 				{
@@ -319,8 +346,10 @@ export default async function doRoute(
 				},
 			);
 			console.log(`Started code server in limelight: ${data}`);
+
 			setInterval(async () => {
 				// const status = await axios.get('http://localhost:443/ping');
+
 				const status = await axios.get(
 					`https://${workerHostname}:443/limelight-worker/pat`,
 				);
@@ -336,6 +365,7 @@ export default async function doRoute(
 	}
 
 	let match: IMatchedTunnel;
+
 	try {
 		const m = await getMatchingSessionForTunnelName({
 			userAgent: USER_AGENT,
@@ -352,6 +382,7 @@ export default async function doRoute(
 					forceNewSession: false,
 				},
 			);
+
 			return await new Promise(() => {});
 		}
 		match = m;
@@ -361,6 +392,7 @@ export default async function doRoute(
 			remoteAuthority: loadUri.authority,
 			webSocketFactory: new FailingWebSocketFactory(e as Error),
 		};
+
 		return;
 	}
 	// const manager = new ConnectionManager({
@@ -429,6 +461,7 @@ class FailingWebSocketFactory implements IWebSocketFactory {
 			onData: () => ({ dispose: () => {} }),
 			onError: (e) => {
 				setTimeout(() => e(this.error), 1);
+
 				return { dispose: () => {} };
 			},
 			onOpen: () => ({ dispose: () => {} }),
@@ -439,6 +472,7 @@ class FailingWebSocketFactory implements IWebSocketFactory {
 
 function parseVersion(version: string) {
 	const versionParts = version.split("=");
+
 	if (!versionParts || versionParts.length < 2) {
 		throw new Error(`please specify the code version correctly!`);
 	}
@@ -450,7 +484,9 @@ function parseStorageAccountDetails(storageAccountConnectionString: string) {
 		throw new Error(`Storage account connection string is undefined!`);
 	}
 	const connectionStringParts = storageAccountConnectionString.split(";");
+
 	const accountNameParts = connectionStringParts[1].split("=");
+
 	const accountKeyParts = connectionStringParts[2].substring(
 		connectionStringParts[2].indexOf("=") + 1,
 	);
@@ -468,15 +504,19 @@ function parseFunctionAppDetails(workspaceOrFolderUri: URI) {
 	const resourceParts = workspaceOrFolderUri.authority.split("+");
 
 	const subscription = resourceParts[urlParamMap.get("subscription") || 0];
+
 	const resourceGroup = resourceParts[urlParamMap.get("resourceGroup") || 1];
+
 	const functionAppName =
 		resourceParts[urlParamMap.get("functionAppName") || 2];
+
 	const username = resourceParts[urlParamMap.get("username") || 3];
 
 	[subscription, resourceGroup, functionAppName, username].forEach(
 		(param) => {
 			if (!param) {
 				const [paramName] = Object.keys({ param });
+
 				throw new Error(`${paramName} can not be null in the url!`);
 			}
 		},
@@ -495,13 +535,16 @@ async function getFunctionAppStorageAccountConnectionString(
 	// SUBSCRIPTION SHOULD BE SUBSCRIPTION ID
 	const url = `https://management.azure.com/subscriptions/${subscription}/resourceGroups/${resourceGroup}/providers/Microsoft.Web/sites/${functionAppName}/config/appsettings/list?api-version=2021-02-01`;
 	console.log(`Retrieving function app storage account connection string...`);
+
 	const { data } = await axios.post(url, "", {
 		headers: {
 			Authorization: "Bearer " + managementAccessToken,
 		},
 	});
+
 	const connStr = data["properties"]["AzureWebJobsStorage"];
 	console.log(`Function app storage account connection string retrieved.`);
+
 	return connStr;
 }
 
@@ -514,13 +557,16 @@ async function getFunctionAppSrcURL(
 	// SUBSCRIPTION SHOULD BE SUBSCRIPTION ID
 	const url = `https://management.azure.com/subscriptions/${subscription}/resourceGroups/${resourceGroup}/providers/Microsoft.Web/sites/${functionAppName}/config/appsettings/list?api-version=2021-02-01`;
 	console.log(`Retrieving function app src url...`);
+
 	const { data } = await axios.post(url, "", {
 		headers: {
 			Authorization: "Bearer " + managementAccessToken,
 		},
 	});
+
 	const srcURL = data["properties"]["WEBSITE_RUN_FROM_PACKAGE"];
 	console.log(`Function app source URL retrieved. ` + srcURL);
+
 	return srcURL;
 }
 
@@ -530,6 +576,7 @@ async function getMicrosoftAuthSessions(
 	const auth = await microsoftAuthentication.getSessions(
 		BasisClient.BASIS_SCOPES,
 	);
+
 	return auth.map((s) => {
 		return {
 			id: s.id,
@@ -546,6 +593,7 @@ async function isFunctionAppNew(
 	managementAccessToken: string,
 ) {
 	console.log(`Determining if ${functionAppName} is new`);
+
 	const url = `https://management.azure.com/subscriptions/${subscription}/resourceGroups/${resourceGroup}/providers/Microsoft.Web/sites/${functionAppName}?api-version=2021-02-01`;
 
 	// checking to see if func app exists
@@ -563,6 +611,7 @@ async function isFunctionAppNew(
 	} catch (error) {
 		// console.log("new func app");
 		console.log(error);
+
 		return true;
 	}
 }
@@ -576,6 +625,7 @@ const createUrl = (
 	port?: number,
 ): URL => {
 	const url = new URL(endpoint, baseUrl);
+
 	if (port) {
 		url.port = port.toString();
 	}
@@ -622,6 +672,7 @@ const backoffOptions: BackoffOptions = {
 	numOfAttempts: 2,
 	retry: (error: any, attemptNumber: number) => {
 		console.error(`Failed attempt ${attemptNumber}: ${error}`);
+
 		return attemptNumber < 5;
 	},
 };

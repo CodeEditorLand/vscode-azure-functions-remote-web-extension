@@ -210,6 +210,7 @@ declare module "vscode" {
 	export interface ResourceLabelFormatter {
 		scheme: string;
 		authority?: string;
+
 		formatting: ResourceLabelFormatting;
 	}
 
@@ -231,6 +232,7 @@ declare module "vscode" {
 			authorityPrefix: string,
 			resolver: RemoteAuthorityResolver,
 		): Disposable;
+
 		export function registerResourceLabelFormatter(
 			formatter: ResourceLabelFormatter,
 		): Disposable;

@@ -8,6 +8,7 @@ export async function checkForUpdates() {
 	const { up_to_date } = await vscode.commands.executeCommand<{
 		up_to_date: boolean;
 	}>("azureml-remote.browser.checkForUpdates", false);
+
 	if (up_to_date) {
 		return;
 	}
@@ -31,11 +32,14 @@ export async function checkForUpdates() {
 
 	if (getAlwaysUpdateCLI()) {
 		await updateCli();
+
 		return;
 	}
 
 	const alwaysUpdate = "Always update";
+
 	const updateAction = "Update";
+
 	const actual = await vscode.window.showInformationMessage(
 		"An update for the VS Code CLI on your remote server is available. Would you like to update now? Your current session won't be interrupted",
 		alwaysUpdate,

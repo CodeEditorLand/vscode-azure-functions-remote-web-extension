@@ -10591,6 +10591,7 @@ declare module "vscode" {
 	export class DataTransferItem {
 		asString(): Thenable<string>;
 		readonly value: any;
+
 		constructor(value: any);
 	}
 
@@ -13324,6 +13325,7 @@ declare module "vscode" {
 			provider: SignatureHelpProvider,
 			...triggerCharacters: string[]
 		): Disposable;
+
 		export function registerSignatureHelpProvider(
 			selector: DocumentSelector,
 			provider: SignatureHelpProvider,
