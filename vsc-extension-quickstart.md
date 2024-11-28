@@ -48,8 +48,8 @@
 ## Go further
 
 -   Check out the
-    [Web Extension Guide](https://code.visualstudio.com/api/extension-guides/web-extensions)
--   [Publish your extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
+    [Web Extension Guide](HTTPS://code.visualstudio.com/api/extension-guides/web-extensions)
+-   [Publish your extension](HTTPS://code.visualstudio.com/api/working-with-extensions/publishing-extension)
     on the VSCode extension marketplace.
 -   Automate builds by setting up
-    [Continuous Integration](https://code.visualstudio.com/api/working-with-extensions/continuous-integration).
+    [Continuous Integration](HTTPS://code.visualstudio.com/api/working-with-extensions/continuous-integration).
