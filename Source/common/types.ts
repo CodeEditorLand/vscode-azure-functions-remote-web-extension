@@ -122,6 +122,7 @@ export type OnlyMethods<T> = {
 		? T[K]
 		: never;
 };
+
 export type OnlyNotifications<T> = {
 	[K in keyof T]: T[K] extends { request: object; response: never }
 		? T[K]

@@ -54,6 +54,7 @@ import { showProgress } from "./util/progress";
 export const BASIS_SCOPES = [
 	`${TunnelServiceProperties.production.serviceAppId}/.default`,
 ];
+
 export const MANAGEMENT_SCOPES = [`https://management.azure.com/.default`];
 
 const tunnelPort = 31545;
