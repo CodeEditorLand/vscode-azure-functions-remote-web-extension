@@ -19,6 +19,7 @@ export type RunCommand = { command: string; args: any[] };
 
 export interface IPostWorkbenchCreationActions {
 	readonly openUri?: UriComponents;
+
 	readonly runCommands?: RunCommand[];
 }
 
@@ -28,10 +29,15 @@ export interface IPreWorkbenchDisposalActions {
 
 export interface IRouteResult {
 	workspace: IWorkspace;
+
 	workbenchOptions?: IWorkbenchConstructionOptions;
+
 	readonly onDidCreateWorkbench: Writeable<IPostWorkbenchCreationActions>;
+
 	readonly onWillDisposeWorkbench?: IPreWorkbenchDisposalActions;
+
 	welcomeBanner?: IWelcomeBanner;
+
 	suppressDefaultRemoteExtensions?: true;
 }
 
@@ -39,9 +45,11 @@ export interface IRouterWorkbench {
 	commands: {
 		executeCommand(command: string, ...args: any[]): Promise<unknown>;
 	};
+
 	logger: {
 		log(level: LogLevel, message: string): Promise<void>;
 	};
+
 	window: {
 		withProgress<R>(
 			options:
@@ -58,20 +66,27 @@ export interface IRouterWorkbench {
 // https://github.com/microsoft/vscode/blob/ae0f691839eff7dc0354224f7cff9ed3a128cf54/src/vscode-dts/vscode.d.ts#L14530
 export interface AuthenticationSession {
 	readonly id: string;
+
 	readonly accessToken: string;
+
 	readonly account: {
 		label: string;
+
 		id: string;
 	};
+
 	readonly scopes: readonly string[];
 }
 
 export interface MicrosoftAuthenticationSession {
 	readonly id: string;
+
 	readonly account: {
 		label: string;
+
 		id: string;
 	};
+
 	readonly scopes: readonly string[];
 
 	getAccessToken(): Promise<string>;
@@ -89,5 +104,6 @@ export interface IMicrosoftAuthentication {
  */
 export interface IProductInfo {
 	readonly commit?: string;
+
 	readonly quality: "stable" | "insider";
 }

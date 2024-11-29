@@ -82,9 +82,11 @@ export interface IRouterWorkbench {
 	commands: {
 		executeCommand(command: string, ...args: any[]): Promise<unknown>;
 	};
+
 	logger: {
 		log(level: LogLevel, message: string): Promise<void>;
 	};
+
 	window: {
 		withProgress<R>(
 			options:
@@ -102,8 +104,11 @@ export default async function doRoute(
 	route: IRouteResult,
 	extra: {
 		version: IProductInfo;
+
 		microsoftAuthentication: IMicrosoftAuthentication;
+
 		workbench: IRouterWorkbench;
+
 		registerLoopbackResponder: (fn: LoopbackHandler) => void;
 	},
 ) {
@@ -151,6 +156,7 @@ export default async function doRoute(
 
 	// Create fingerprint
 	const fingerprint = createFingerprint(functionAppName, username);
+
 	console.log("Fingerprint formed.");
 
 	// Call ARM API, ControllerRole to get TunnelID from created DevTunnel
@@ -196,6 +202,7 @@ export default async function doRoute(
 	const agentPort = 3000;
 
 	const agentUrl = createUrl(agentBaseUrl, agentEndpoint, agentPort);
+
 	await postRequest(agentUrl, agentBody);
 
 	const isNewApp = await isFunctionAppNew(
@@ -213,6 +220,7 @@ export default async function doRoute(
 
 	if (!isNewApp) {
 		console.log(`Function app ${functionAppName} is an existing app`);
+
 		storageAccountConnectionString =
 			await getFunctionAppStorageAccountConnectionString(
 				subscription,
@@ -220,6 +228,7 @@ export default async function doRoute(
 				functionAppName,
 				managementAccessToken,
 			);
+
 		srcURL = await getFunctionAppSrcURL(
 			subscription,
 			resourceGroup,
@@ -257,6 +266,7 @@ export default async function doRoute(
 					`${functionAppName}-${username}-${new Date().getMilliseconds()}`,
 					tunnelPort,
 				);
+
 				localStorage.setItem(
 					cachedTunnelDefinition,
 					JSON.stringify(tunnel),
@@ -277,6 +287,7 @@ export default async function doRoute(
 
 	// Call container api hosted at the container app ip
 	console.log("Tunnel is found..");
+
 	console.log(tunnel);
 
 	const tunnelActive = await Basis.isActive(basisAccessToken, tunnel);
@@ -301,8 +312,11 @@ export default async function doRoute(
 					version,
 				},
 			);
+
 			console.log("Limelight session is created..");
+
 			console.log(containerInfo);
+
 			workerHostname = containerInfo.data.data.configuration.ingress.fqdn;
 
 			if (workerHostname) {
@@ -326,9 +340,11 @@ export default async function doRoute(
 					version,
 				},
 			);
+
 			console.log(`Cx function app files are synced: ${res}`);
 		} catch (error) {
 			console.log("Failed to create limelight session..");
+
 			console.log(error);
 
 			throw new Error("Failed to create limelight session..");
@@ -346,6 +362,7 @@ export default async function doRoute(
 					cluster: tunnel.clusterId,
 				},
 			);
+
 			console.log(`Started code server in limelight: ${data}`);
 
 			setInterval(async () => {
@@ -354,7 +371,9 @@ export default async function doRoute(
 				const status = await axios.get(
 					`https://${workerHostname}:443/limelight-worker/pat`,
 				);
+
 				console.log(status);
+
 				localStorage.removeItem(cachedWorkerHostname);
 				//TODO: if failed, container app is gone, create new container app with same name
 			}, 5000);
@@ -386,6 +405,7 @@ export default async function doRoute(
 
 			return await new Promise(() => {});
 		}
+
 		match = m;
 	} catch (e) {
 		route.workbenchOptions = {
@@ -449,6 +469,7 @@ export default async function doRoute(
 			],
 		},
 	];
+
 	route.workspace = { folderUri: loadUri };
 }
 
@@ -477,6 +498,7 @@ function parseVersion(version: string) {
 	if (!versionParts || versionParts.length < 2) {
 		throw new Error(`please specify the code version correctly!`);
 	}
+
 	return versionParts[1];
 }
 
@@ -484,6 +506,7 @@ function parseStorageAccountDetails(storageAccountConnectionString: string) {
 	if (!storageAccountConnectionString) {
 		throw new Error(`Storage account connection string is undefined!`);
 	}
+
 	const connectionStringParts = storageAccountConnectionString.split(";");
 
 	const accountNameParts = connectionStringParts[1].split("=");
@@ -502,6 +525,7 @@ function parseFunctionAppDetails(workspaceOrFolderUri: URI) {
 	) {
 		throw new Error("Please enter a valid url!");
 	}
+
 	const resourceParts = workspaceOrFolderUri.authority.split("+");
 
 	const subscription = resourceParts[urlParamMap.get("subscription") || 0];
@@ -535,6 +559,7 @@ async function getFunctionAppStorageAccountConnectionString(
 	console.log("Bearer " + managementAccessToken);
 	// SUBSCRIPTION SHOULD BE SUBSCRIPTION ID
 	const url = `https://management.azure.com/subscriptions/${subscription}/resourceGroups/${resourceGroup}/providers/Microsoft.Web/sites/${functionAppName}/config/appsettings/list?api-version=2021-02-01`;
+
 	console.log(`Retrieving function app storage account connection string...`);
 
 	const { data } = await axios.post(url, "", {
@@ -544,6 +569,7 @@ async function getFunctionAppStorageAccountConnectionString(
 	});
 
 	const connStr = data["properties"]["AzureWebJobsStorage"];
+
 	console.log(`Function app storage account connection string retrieved.`);
 
 	return connStr;
@@ -557,6 +583,7 @@ async function getFunctionAppSrcURL(
 ) {
 	// SUBSCRIPTION SHOULD BE SUBSCRIPTION ID
 	const url = `https://management.azure.com/subscriptions/${subscription}/resourceGroups/${resourceGroup}/providers/Microsoft.Web/sites/${functionAppName}/config/appsettings/list?api-version=2021-02-01`;
+
 	console.log(`Retrieving function app src url...`);
 
 	const { data } = await axios.post(url, "", {
@@ -566,6 +593,7 @@ async function getFunctionAppSrcURL(
 	});
 
 	const srcURL = data["properties"]["WEBSITE_RUN_FROM_PACKAGE"];
+
 	console.log(`Function app source URL retrieved. ` + srcURL);
 
 	return srcURL;
@@ -604,6 +632,7 @@ async function isFunctionAppNew(
 				Authorization: "Bearer " + managementAccessToken,
 			},
 		});
+
 		console.log(data);
 
 		return false;
@@ -611,6 +640,7 @@ async function isFunctionAppNew(
 		// error means no such app exists in storage
 	} catch (error) {
 		// console.log("new func app");
+
 		console.log(error);
 
 		return true;

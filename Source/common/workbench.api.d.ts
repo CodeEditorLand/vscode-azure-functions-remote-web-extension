@@ -6,9 +6,13 @@
 declare module "vs/workbench/workbench.web.main" {
 	interface UriComponents {
 		scheme?: string;
+
 		authority?: string;
+
 		path?: string;
+
 		query?: string;
+
 		fragment?: string;
 	}
 
@@ -68,9 +72,13 @@ declare module "vs/workbench/workbench.web.main" {
 
 		with(change: {
 			scheme?: string;
+
 			authority?: string | null;
+
 			path?: string | null;
+
 			query?: string | null;
+
 			fragment?: string | null;
 		}): URI;
 
@@ -92,12 +100,17 @@ declare module "vs/workbench/workbench.web.main" {
 		 * interpreted (# and ?). See the following sample:
 		 * ```ts
 			const good = URI.file('/coding/c#/project1');
+
 			good.scheme === 'file';
+
 			good.path === '/coding/c#/project1';
+
 			good.fragment === '';
 
 			const bad = URI.parse('file://' + '/coding/c#/project1');
+
 			bad.scheme === 'file';
+
 			bad.path === '/coding/c'; // path is now broken
 			bad.fragment === '/project1';
 			```
@@ -108,9 +121,13 @@ declare module "vs/workbench/workbench.web.main" {
 
 		static from(components: {
 			scheme: string;
+
 			authority?: string;
+
 			path?: string;
+
 			query?: string;
+
 			fragment?: string;
 		}): URI;
 
@@ -135,32 +152,42 @@ declare module "vs/workbench/workbench.web.main" {
 		 * @param skipEncoding Do not encode the result, default is `false`
 		 */
 		toString(skipEncoding?: boolean): string;
+
 		toJSON(): UriComponents;
 
 		static revive(data: UriComponents | URI): URI;
+
 		static revive(data: UriComponents | URI | undefined): URI | undefined;
+
 		static revive(data: UriComponents | URI | null): URI | null;
+
 		static revive(
 			data: UriComponents | URI | undefined | null,
 		): URI | undefined | null;
+
 		static revive(
 			data: UriComponents | URI | undefined | null,
 		): URI | undefined | null;
 	}
 
 	type ExtensionKind = "ui" | "workspace" | "web";
+
 	type ExtensionWorkspaceTrustRequestType = "never" | "onStart" | "onDemand";
+
 	type ExtensionWorkspaceTrust =
 		| { request: "never" }
 		| { request: "onStart"; description: string }
 		| {
 				request: "onDemand";
+
 				description: string;
+
 				requiredForConfigurations?: string[];
 		  };
 
 	interface IConfigurationProperty {
 		description: string;
+
 		type: string | string[];
 
 		default?: any;
@@ -172,7 +199,9 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IDebugger {
 		label?: string;
+
 		type: string;
+
 		runtime?: string;
 	}
 
@@ -182,28 +211,39 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IJSONValidation {
 		fileMatch: string | string[];
+
 		url: string;
 	}
 
 	interface IKeyBinding {
 		command: string;
+
 		key: string;
+
 		when?: string;
+
 		mac?: string;
+
 		linux?: string;
+
 		win?: string;
 	}
 
 	interface ILanguage {
 		id: string;
+
 		extensions: string[];
+
 		aliases: string[];
 	}
 
 	interface IMenu {
 		command: string;
+
 		alt?: string;
+
 		when?: string;
+
 		group?: string;
 	}
 
@@ -217,16 +257,19 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IViewContainer {
 		id: string;
+
 		title: string;
 	}
 
 	interface IView {
 		id: string;
+
 		name: string;
 	}
 
 	interface IColor {
 		id: string;
+
 		description: string;
 
 		defaults: { light: string; dark: string; highContrast: string };
@@ -234,20 +277,27 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface ITranslation {
 		id: string;
+
 		path: string;
 	}
 
 	interface ILocalization {
 		languageId: string;
+
 		languageName?: string;
+
 		localizedLanguageName?: string;
+
 		translations: ITranslation[];
+
 		minimalTranslations?: { [key: string]: string };
 	}
 
 	interface IWebviewEditor {
 		readonly viewType: string;
+
 		readonly priority: string;
+
 		readonly selector: readonly {
 			readonly filenamePattern?: string;
 		}[];
@@ -255,99 +305,159 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IAction extends IDisposable {
 		readonly id: string;
+
 		label: string;
+
 		tooltip: string;
 
 		class: string | undefined;
+
 		enabled: boolean;
+
 		checked?: boolean;
+
 		run(event?: unknown): unknown;
 	}
 
 	interface ICodeActionContributionAction {
 		readonly kind: string;
+
 		readonly title: string;
+
 		readonly description?: string;
 	}
 
 	interface ICodeActionContribution {
 		readonly languages: readonly string[];
+
 		readonly actions: readonly ICodeActionContributionAction[];
 	}
 
 	interface IAuthenticationContribution {
 		readonly id: string;
+
 		readonly label: string;
 	}
 
 	interface IWalkthroughTask {
 		readonly id: string;
+
 		readonly title: string;
+
 		readonly description: string;
+
 		readonly media: { path: string; altText: string };
+
 		readonly doneOn?: { command: string };
+
 		readonly when?: string;
 	}
 
 	interface IWalkthrough {
 		readonly id: string;
+
 		readonly title: string;
+
 		readonly description: string;
+
 		readonly tasks: IWalkthroughTask[];
+
 		readonly primary?: boolean;
+
 		readonly when?: string;
 	}
 
 	interface IExtensionContributions {
 		commands?: ICommand[];
+
 		configuration?: IConfiguration | IConfiguration[];
+
 		debuggers?: IDebugger[];
+
 		grammars?: IGrammar[];
+
 		jsonValidation?: IJSONValidation[];
+
 		keybindings?: IKeyBinding[];
+
 		languages?: ILanguage[];
+
 		menus?: { [context: string]: IMenu[] };
+
 		snippets?: ISnippet[];
+
 		themes?: ITheme[];
+
 		iconThemes?: ITheme[];
+
 		productIconThemes?: ITheme[];
+
 		viewsContainers?: { [location: string]: IViewContainer[] };
+
 		views?: { [location: string]: IView[] };
+
 		colors?: IColor[];
+
 		localizations?: ILocalization[];
+
 		readonly customEditors?: readonly IWebviewEditor[];
+
 		readonly codeActions?: readonly ICodeActionContribution[];
+
 		authentication?: IAuthenticationContribution[];
+
 		walkthroughs?: IWalkthrough[];
 	}
 
 	interface IExtensionManifest {
 		readonly name: string;
+
 		readonly displayName?: string;
+
 		readonly publisher: string;
+
 		readonly version: string;
+
 		readonly engines: { readonly vscode: string };
+
 		readonly description?: string;
+
 		readonly main?: string;
+
 		readonly browser?: string;
+
 		readonly icon?: string;
+
 		readonly categories?: string[];
+
 		readonly keywords?: string[];
+
 		readonly activationEvents?: string[];
+
 		readonly extensionDependencies?: string[];
+
 		readonly extensionPack?: string[];
+
 		readonly extensionKind?: ExtensionKind | ExtensionKind[];
+
 		readonly contributes?: IExtensionContributions;
+
 		readonly repository?: { url: string };
+
 		readonly bugs?: { url: string };
+
 		readonly enableProposedApi?: boolean;
+
 		readonly api?: string;
+
 		readonly scripts?: { [key: string]: string };
+
 		readonly workspaceTrust?: ExtensionWorkspaceTrust;
 	}
 
 	interface TunnelProviderFeatures {
 		elevation: boolean;
+
 		public: boolean;
 	}
 
@@ -359,6 +469,7 @@ declare module "vs/workbench/workbench.web.main" {
 		static readonly None: IDisposable;
 
 		constructor();
+
 		dispose(): void;
 	}
 
@@ -376,25 +487,35 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface EmitterOptions {
 		onFirstListenerAdd?: Function;
+
 		onFirstListenerDidAdd?: Function;
+
 		onListenerDidAdd?: Function;
+
 		onLastListenerRemove?: Function;
 	}
 
 	class Emitter<T> {
 		constructor(options?: EmitterOptions);
+
 		readonly event: Event<T>;
+
 		fire(event: T): void;
+
 		dispose(): void;
 	}
 
 	interface IWebSocket {
 		readonly onData: Event<ArrayBuffer>;
+
 		readonly onOpen: Event<void>;
+
 		readonly onClose: Event<void>;
+
 		readonly onError: Event<any>;
 
 		send(data: ArrayBuffer | ArrayBufferView): void;
+
 		close(): void;
 	}
 
@@ -604,6 +725,7 @@ declare module "vs/workbench/workbench.web.main" {
 		 */
 		limits?: {
 			readonly size?: number;
+
 			readonly memory?: number;
 		};
 	}
@@ -712,22 +834,29 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IFileSystemProvider {
 		readonly capabilities: FileSystemProviderCapabilities;
+
 		readonly onDidChangeCapabilities: Event<void>;
 
 		readonly onDidErrorOccur?: Event<string>; // TODO@bpasero remove once file watchers are solid
 
 		readonly onDidChangeFile: Event<readonly IFileChange[]>;
+
 		watch(resource: URI, opts: IWatchOptions): IDisposable;
 
 		stat(resource: URI): Promise<IStat>;
+
 		mkdir(resource: URI): Promise<void>;
+
 		readdir(resource: URI): Promise<[string, FileType][]>;
+
 		delete(resource: URI, opts: FileDeleteOptions): Promise<void>;
 
 		rename(from: URI, to: URI, opts: FileOverwriteOptions): Promise<void>;
+
 		copy?(from: URI, to: URI, opts: FileOverwriteOptions): Promise<void>;
 
 		readFile?(resource: URI): Promise<Uint8Array>;
+
 		writeFile?(
 			resource: URI,
 			content: Uint8Array,
@@ -741,7 +870,9 @@ declare module "vs/workbench/workbench.web.main" {
 		): ReadableStreamEvents<Uint8Array>;
 
 		open?(resource: URI, opts: FileOpenOptions): Promise<number>;
+
 		close?(fd: number): Promise<void>;
+
 		read?(
 			fd: number,
 			pos: number,
@@ -749,6 +880,7 @@ declare module "vs/workbench/workbench.web.main" {
 			offset: number,
 			length: number,
 		): Promise<number>;
+
 		write?(
 			fd: number,
 			pos: number,
@@ -766,11 +898,15 @@ declare module "vs/workbench/workbench.web.main" {
 			account: string,
 			password: string,
 		): Promise<void>;
+
 		deletePassword(service: string, account: string): Promise<boolean>;
+
 		findPassword(service: string): Promise<string | null>;
+
 		findCredentials(
 			service: string,
 		): Promise<Array<{ account: string; password: string }>>;
+
 		clear?(): Promise<void>;
 	}
 
@@ -814,28 +950,38 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IBuiltInExtension {
 		readonly name: string;
+
 		readonly version: string;
+
 		readonly repo: string;
+
 		readonly metadata: any;
 	}
 
 	type ImportantExtensionTip = {
 		name: string;
+
 		languages?: string[];
+
 		pattern?: string;
+
 		isExtensionPack?: boolean;
 	};
 
 	interface IConfigBasedExtensionTip {
 		configPath: string;
+
 		configName: string;
+
 		recommendations: Record<
 			string,
 			{
 				name: string;
+
 				remotes?: string[];
 
 				important?: boolean;
+
 				isExtensionPack?: boolean;
 			}
 		>;
@@ -843,9 +989,11 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IExeBasedExtensionTip {
 		friendlyName: string;
+
 		windowsPath?: string;
 
 		important?: boolean;
+
 		recommendations: Record<
 			string,
 			{ name: string; important?: boolean; isExtensionPack?: boolean }
@@ -854,68 +1002,96 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IRemoteExtensionTip {
 		friendlyName: string;
+
 		extensionId: string;
 	}
 
 	interface ISurveyData {
 		surveyId: string;
+
 		surveyUrl: string;
+
 		languageId: string;
+
 		editCount: number;
+
 		userProbability: number;
 	}
 
 	interface IAppCenterConfiguration {
 		readonly "win32-ia32": string;
+
 		readonly "win32-x64": string;
+
 		readonly "linux-x64": string;
+
 		readonly darwin: string;
 	}
 
 	type ExtensionWorkspaceTrustRequest = {
 		readonly default?: "never" | "onStart" | "onDemand";
+
 		readonly override?: "never" | "onStart" | "onDemand";
 	};
 
 	type ConfigurationSyncStore = {
 		url: string;
+
 		insidersUrl: string;
+
 		stableUrl: string;
+
 		canSwitch: boolean;
+
 		authenticationProviders: Record<string, { scopes: string[] }>;
 	};
 
 	interface IProductConfiguration {
 		readonly version: string;
+
 		readonly date?: string;
+
 		readonly quality?: string;
+
 		readonly commit?: string;
 
 		readonly nameShort: string;
+
 		readonly nameLong: string;
 
 		readonly win32AppUserModelId?: string;
+
 		readonly win32MutexName?: string;
+
 		readonly applicationName: string;
+
 		readonly embedderIdentifier?: string;
 
 		readonly urlProtocol: string;
+
 		readonly dataFolderName: string; // location for extensions (e.g. ~/.vscode-insiders)
 
 		readonly builtInExtensions?: IBuiltInExtension[];
 
 		readonly downloadUrl?: string;
+
 		readonly updateUrl?: string;
+
 		readonly webEndpointUrl?: string;
+
 		readonly target?: string;
 
 		readonly settingsSearchBuildId?: number;
+
 		readonly settingsSearchUrl?: string;
 
 		readonly tasConfig?: {
 			endpoint: string;
+
 			telemetryEventName: string;
+
 			featuresTelemetryPropertyName: string;
+
 			assignmentContextTelemetryPropertyName: string;
 		};
 
@@ -923,66 +1099,98 @@ declare module "vs/workbench/workbench.web.main" {
 
 		readonly extensionsGallery?: {
 			readonly serviceUrl: string;
+
 			readonly cacheUrl: string;
+
 			readonly itemUrl: string;
+
 			readonly resourceUrlTemplate: string;
+
 			readonly controlUrl: string;
+
 			readonly recommendationsUrl: string;
 		};
 
 		readonly extensionTips?: { [id: string]: string };
+
 		readonly extensionImportantTips?: Record<string, ImportantExtensionTip>;
+
 		readonly configBasedExtensionTips?: {
 			[id: string]: IConfigBasedExtensionTip;
 		};
+
 		readonly exeBasedExtensionTips?: {
 			[id: string]: IExeBasedExtensionTip;
 		};
+
 		readonly remoteExtensionTips?: {
 			[remoteName: string]: IRemoteExtensionTip;
 		};
+
 		readonly extensionKeywords?: { [extension: string]: readonly string[] };
+
 		readonly keymapExtensionTips?: readonly string[];
+
 		readonly trustedExtensionUrlPublicKeys?: { [id: string]: string[] };
 
 		readonly crashReporter?: {
 			readonly companyName: string;
+
 			readonly productName: string;
 		};
 
 		readonly enableTelemetry?: boolean;
+
 		readonly aiConfig?: {
 			readonly asimovKey: string;
 		};
 
 		readonly sendASmile?: {
 			readonly reportIssueUrl: string;
+
 			readonly requestFeatureUrl: string;
 		};
 
 		readonly documentationUrl?: string;
+
 		readonly releaseNotesUrl?: string;
+
 		readonly keyboardShortcutsUrlMac?: string;
+
 		readonly keyboardShortcutsUrlLinux?: string;
+
 		readonly keyboardShortcutsUrlWin?: string;
+
 		readonly introductoryVideosUrl?: string;
+
 		readonly tipsAndTricksUrl?: string;
+
 		readonly newsletterSignupUrl?: string;
+
 		readonly twitterUrl?: string;
+
 		readonly requestFeatureUrl?: string;
+
 		readonly reportIssueUrl?: string;
+
 		readonly reportMarketplaceIssueUrl?: string;
+
 		readonly licenseUrl?: string;
+
 		readonly privacyStatementUrl?: string;
+
 		readonly telemetryOptOutUrl?: string;
 
 		readonly openToWelcomeMainPage?: boolean;
 
 		readonly npsSurveyUrl?: string;
+
 		readonly cesSurveyUrl?: string;
+
 		readonly surveys?: readonly ISurveyData[];
 
 		readonly checksums?: { [path: string]: string };
+
 		readonly checksumFailMoreInfoUrl?: string;
 
 		readonly appCenter?: IAppCenterConfiguration;
@@ -992,18 +1200,23 @@ declare module "vs/workbench/workbench.web.main" {
 		readonly extensionKind?: {
 			readonly [extensionId: string]: ("ui" | "workspace" | "web")[];
 		};
+
 		readonly extensionSyncedKeys?: {
 			readonly [extensionId: string]: string[];
 		};
+
 		readonly extensionAllowedProposedApi?: readonly string[];
+
 		readonly extensionEnabledApiProposals?: {
 			readonly [extensionId: string]: string[];
 		};
+
 		readonly extensionWorkspaceTrustRequest?: {
 			readonly [extensionId: string]: ExtensionWorkspaceTrustRequest;
 		};
 
 		readonly msftInternalDomains?: string[];
+
 		readonly linkProtectionTrustedDomains?: readonly string[];
 
 		readonly "configurationSync.store"?: ConfigurationSyncStore;
@@ -1027,7 +1240,9 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IStaticExtension {
 		packageJSON: IExtensionManifest;
+
 		extensionLocation: URI;
+
 		isBuiltin?: boolean;
 	}
 
@@ -1044,6 +1259,7 @@ declare module "vs/workbench/workbench.web.main" {
 	interface ICommonTelemetryPropertiesResolver {
 		(): { [key: string]: any };
 	}
+
 	interface IExternalUriResolver {
 		(uri: URI): Promise<URI>;
 	}
@@ -1289,6 +1505,7 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IPosition {
 		readonly line: number;
+
 		readonly column: number;
 	}
 
@@ -1473,17 +1690,21 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IDefaultEditor {
 		readonly uri: UriComponents;
+
 		readonly selection?: IRange;
+
 		readonly openOnlyIfExists?: boolean;
 		/**
 		 * @deprecated use `options.override` instead
 		 */
 		readonly openWith?: string;
+
 		readonly options?: IEditorOptions;
 	}
 
 	interface IDefaultLayout {
 		readonly views?: IDefaultView[];
+
 		readonly editors?: IDefaultEditor[];
 		/** Forces this layout to be applied even if this isn't the first time the workspace has been opened */
 		readonly force?: boolean;
@@ -1768,6 +1989,7 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IObservableValue<T> {
 		onDidChange: Event<T>;
+
 		readonly value: T;
 	}
 
@@ -1789,28 +2011,39 @@ declare module "vs/workbench/workbench.web.main" {
 
 	interface IProgressOptions {
 		readonly location: ProgressLocation | string;
+
 		readonly title?: string;
+
 		readonly source?: string | { label: string; id: string };
+
 		readonly total?: number;
+
 		readonly buttons?: string[];
 	}
 
 	interface IProgressNotificationOptions extends IProgressOptions {
 		readonly location: ProgressLocation.Notification;
+
 		readonly primaryActions?: readonly IAction[];
+
 		readonly secondaryActions?: readonly IAction[];
+
 		readonly delay?: number;
+
 		readonly silent?: boolean;
 	}
 
 	interface IProgressDialogOptions extends IProgressOptions {
 		readonly delay?: number;
+
 		readonly detail?: string;
+
 		readonly sticky?: boolean;
 	}
 
 	interface IProgressWindowOptions extends IProgressOptions {
 		readonly location: ProgressLocation.Window;
+
 		readonly command?: string;
 	}
 
@@ -1820,12 +2053,15 @@ declare module "vs/workbench/workbench.web.main" {
 			| ProgressLocation.Extensions
 			| ProgressLocation.Scm
 			| string;
+
 		readonly delay?: number;
 	}
 
 	interface IProgressStep {
 		message?: string;
+
 		increment?: number;
+
 		total?: number;
 	}
 

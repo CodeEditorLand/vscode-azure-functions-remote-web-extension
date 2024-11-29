@@ -19,7 +19,9 @@ declare module "vscode" {
 
 	export class ResolvedAuthority {
 		readonly host: string;
+
 		readonly port: number;
+
 		readonly connectionToken: string | undefined;
 
 		constructor(host: string, port: number, connectionToken?: string);
@@ -40,7 +42,9 @@ declare module "vscode" {
 
 	export interface TunnelPrivacy {
 		themeIcon: string;
+
 		id: string;
+
 		label: string;
 	}
 
@@ -48,12 +52,15 @@ declare module "vscode" {
 		remoteAddress: { port: number; host: string };
 		// The desired local port. If this port can't be used, then another will be chosen.
 		localAddressPort?: number;
+
 		label?: string;
 		/**
 		 * @deprecated Use privacy instead
 		 */
 		public?: boolean;
+
 		privacy?: string;
+
 		protocol?: string;
 	}
 
@@ -65,6 +72,7 @@ declare module "vscode" {
 		 * @deprecated Use privacy instead
 		 */
 		public?: boolean;
+
 		privacy?: string;
 		// If protocol is not provided it is assumed to be http, regardless of the localAddress.
 		protocol?: string;
@@ -73,6 +81,7 @@ declare module "vscode" {
 	export interface Tunnel extends TunnelDescription {
 		// Implementers of Tunnel should fire onDidDispose when dispose is called.
 		onDidDispose: Event<void>;
+
 		dispose(): void | Thenable<void>;
 	}
 
@@ -119,6 +128,7 @@ declare module "vscode" {
 			message?: string,
 			handled?: boolean,
 		): RemoteAuthorityResolverError;
+
 		static TemporarilyNotAvailable(
 			message?: string,
 		): RemoteAuthorityResolverError;
@@ -175,7 +185,9 @@ declare module "vscode" {
 		 */
 		tunnelFeatures?: {
 			elevation: boolean;
+
 			public: boolean;
+
 			privacyOptions: TunnelPrivacy[];
 		};
 
@@ -209,6 +221,7 @@ declare module "vscode" {
 
 	export interface ResourceLabelFormatter {
 		scheme: string;
+
 		authority?: string;
 
 		formatting: ResourceLabelFormatting;
@@ -219,11 +232,17 @@ declare module "vscode" {
 		// For historic reasons we use an or string here. Once we finalize this API we should start using enums instead and adopt it in extensions.
 		// eslint-disable-next-line vscode-dts-literal-or-types
 		separator: "/" | "\\" | "";
+
 		tildify?: boolean;
+
 		normalizeDriveLetter?: boolean;
+
 		workspaceSuffix?: string;
+
 		workspaceTooltip?: string;
+
 		authorityPrefix?: string;
+
 		stripPathStartingSeparator?: boolean;
 	}
 

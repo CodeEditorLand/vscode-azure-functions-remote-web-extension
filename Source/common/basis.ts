@@ -106,6 +106,7 @@ export namespace Basis {
 			);
 
 		const allTunnels = await tunnelManagementClient.listTunnels();
+
 		console.log(`AzureMLRemote: Found ${allTunnels.length} tunnels`);
 
 		for (const tunnel of allTunnels) {
@@ -203,6 +204,7 @@ export namespace Basis {
 
 					if (error!.response?.status === 429) {
 						console.log(error);
+
 						console.log(
 							`Deleting inactive tunnels as max tunnel count limit for user reached`,
 						);
